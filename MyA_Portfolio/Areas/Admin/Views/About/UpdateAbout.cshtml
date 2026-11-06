@@ -1,0 +1,50 @@
+﻿@model About
+
+
+
+@{
+    ViewData["Title"] = "About Ekle";
+}
+
+<h2>Yeni About Bilgisi Ekle</h2>
+
+<form asp-action="UpdateAbout" method="post">
+    <input asp-for="AboutId" type="hidden" />
+    <div class="mb-3">
+        <label asp-for="NameSurname" class="form-label">Ad Soyad</label>
+        <input asp-for="NameSurname" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="JobTitle" class="form-label">Ünvan</label>
+        <input asp-for="JobTitle" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Location" class="form-label">Lokasyon</label>
+        <input asp-for="Location" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Expert" class="form-label">Uzmanlık</label>
+        <input asp-for="Expert" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Email" class="form-label">E-posta</label>
+        <input asp-for="Email" class="form-control" type="email" />
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Description" class="form-label">Açıklama</label>
+        <textarea asp-for="Description" class="form-control" rows="4"></textarea>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="OpenToWork" class="form-label">İş Durumu</label>
+        <input asp-for="OpenToWork" class="form-control" />
+    </div>
+
+    <button type="submit" class="btn btn-success">Kaydet</button>
+    <a asp-action="AboutList" class="btn btn-secondary">Vazgeç</a>
+</form>

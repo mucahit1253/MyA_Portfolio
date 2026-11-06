@@ -1,0 +1,36 @@
+﻿@model List<Education>
+
+@{
+    ViewData["Title"] = "Eğitim Bilgileri";
+}
+
+<h2>Eğitim Bilgileri</h2>
+
+<a asp-action="CreateEducation" class="btn btn-primary mb-3">Yeni Ekle</a>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Okul Adı</th>
+            <th>Bölüm / Program</th>
+            <th>Süre</th>
+            <th>Güncelle</th>
+            <th>Sil</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Title</td>
+                <td>@item.SubTitle</td>
+                <td>@item.Duration</td>
+                <td>
+                    <a asp-action="UpdateEducation" asp-route-id="@item.EducationId" class="btn btn-sm btn-warning">Düzenle</a>
+                   
+                </td>
+                <td> <a asp-action="DeleteEducation" asp-route-id="@item.EducationId" class="btn btn-sm btn-danger">Sil</a></td>
+            </tr>
+        }
+    </tbody>
+</table>

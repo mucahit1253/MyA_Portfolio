@@ -1,0 +1,41 @@
+﻿@model List<About>
+
+
+@{
+    ViewData["Title"] = "About Listesi";
+}
+
+<h2>About Bilgileri</h2>
+
+<a asp-action="CreateAbout" class="btn btn-primary mb-3">Yeni Ekle</a>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Ad Soyad</th>
+            <th>Ünvan</th>
+            <th>Lokasyon</th>
+            <th>Uzmanlık</th>
+            <th>Email</th>
+            <th>Güncelle</th>
+            <th>Sil</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.NameSurname</td>
+                <td>@item.JobTitle</td>
+                <td>@item.Location</td>
+                <td>@item.Expert</td>
+                <td>@item.Email</td>
+                <td>
+                    <a asp-action="UpdateAbout" asp-route-id="@item.AboutId" class="btn btn-sm btn-warning">Düzenle</a>
+                   
+                </td>
+                <td> <a asp-action="DeleteAbout" asp-route-id="@item.AboutId" class="btn btn-sm btn-danger">Sil</a></td>
+            </tr>
+        }
+    </tbody>
+</table>

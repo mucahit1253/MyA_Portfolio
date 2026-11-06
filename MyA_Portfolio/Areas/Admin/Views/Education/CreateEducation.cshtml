@@ -1,0 +1,32 @@
+﻿@model Education
+
+@{
+    ViewData["Title"] = "Eğitim Bilgisi Ekle";
+}
+
+<h2>Yeni Eğitim Bilgisi Ekle</h2>
+
+<form asp-action="CreateEducation" method="post">
+    <div class="mb-3">
+        <label asp-for="Title" class="form-label">Okul Adı</label>
+        <input asp-for="Title" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="SubTitle" class="form-label">Bölüm / Program</label>
+        <input asp-for="SubTitle" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Description" class="form-label">Açıklama</label>
+        <textarea asp-for="Description" class="form-control" rows="3"></textarea>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Duration" class="form-label">Süre</label>
+        <input asp-for="Duration" class="form-control" placeholder="örn: 2020 - 2024" />
+    </div>
+
+    <button type="submit" class="btn btn-success">Kaydet</button>
+    <a asp-action="EducationList" class="btn btn-secondary">Vazgeç</a>
+</form>

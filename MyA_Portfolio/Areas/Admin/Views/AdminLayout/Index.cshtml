@@ -1,0 +1,171 @@
+﻿@{
+    Layout = null;
+
+    // Breadcrumb için route bilgileri (örn: Admin / Deneyimler / DeneyimListesi)
+    var area = ViewContext.RouteData.Values["area"]?.ToString();
+    var controller = ViewContext.RouteData.Values["controller"]?.ToString() ?? "";
+    var action = ViewContext.RouteData.Values["action"]?.ToString() ?? "";
+    var pageTitle = ViewData["Title"]?.ToString() ?? action;
+
+    // Aktif menü kontrolü
+    string Active(string ctrl) =>
+        string.Equals(controller, ctrl, StringComparison.OrdinalIgnoreCase) ? "active" : "";
+}
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@pageTitle | Portfolyo Admin</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    @await Component.InvokeAsync("_AdminLayoutStyleComponentPartial")
+
+    @await RenderSectionAsync("Styles", required: false)
+</head>
+
+<body>
+
+    <!-- ==================== SIDEBAR ==================== -->
+    <aside id="sidebar-wrapper">
+        <a href="/Admin" class="sidebar-brand">
+            <div class="brand-mark">P</div>
+            <div>
+                <div class="fw-bold text-white lh-1" style="font-family: 'Plus Jakarta Sans';">Poyraz.</div>
+                <small class="text-white-50" style="font-size: 0.72rem;">Portfolio Admin</small>
+            </div>
+        </a>
+
+        <nav class="sidebar-nav">
+            <div class="nav-group-title">Genel</div>
+            <a href="/Admin/Dashboard/Index" class="sidebar-link @Active("Dashboard")">
+                <i class="bi bi-speedometer2"></i><span>Dashboard</span>
+            </a>
+
+            <div class="nav-group-title">İçerik</div>
+            <a href="/Admin/About/Index" class="sidebar-link @Active("About")">
+                <i class="bi bi-person"></i><span>Hakkımda</span>
+            </a>
+            <a href="/Admin/Education/Index" class="sidebar-link @Active("Education")">
+                <i class="bi bi-mortarboard"></i><span>Eğitim</span>
+            </a>
+            <a href="/Admin/Deneyimler/DeneyimListesi" class="sidebar-link @Active("Deneyimler")">
+                <i class="bi bi-briefcase"></i><span>Deneyimler</span>
+            </a>
+            <a href="/Admin/Skill/Index" class="sidebar-link @Active("Skill")">
+                <i class="bi bi-code-slash"></i><span>Yetenekler</span>
+            </a>
+            <a href="/Admin/Project/Index" class="sidebar-link @Active("Project")">
+                <i class="bi bi-grid"></i><span>Projeler</span>
+            </a>
+
+            <div class="nav-group-title">İletişim & Sistem</div>
+            <a href="/Admin/Message/Index" class="sidebar-link @Active("Message")">
+                <i class="bi bi-envelope"></i><span>Mesajlar</span>
+            </a>
+            <a href="/Admin/Setting/Index" class="sidebar-link @Active("Setting")">
+                <i class="bi bi-gear"></i><span>Ayarlar</span>
+            </a>
+        </nav>
+
+        <div class="sidebar-user">
+            <div class="user-avatar">MY</div>
+            <div class="overflow-hidden">
+                <div class="fw-semibold text-white text-truncate" style="font-size: 0.83rem;">Murat Yücedağ</div>
+                <div style="font-size: 0.7rem; color: #B3BFDF;">Yönetici</div>
+            </div>
+        </div>
+    </aside>
+
+    <div class="sidebar-overlay" onclick="toggleSidebar()"></div>
+
+    <!-- ==================== MAIN ==================== -->
+    <div id="main-content-wrapper">
+
+        <!-- NAVBAR -->
+        <header class="admin-navbar">
+            <div class="d-flex align-items-center gap-3">
+                <button type="button" class="nav-icon-btn d-lg-none" onclick="toggleSidebar()" aria-label="Menü">
+                    <i class="bi bi-list"></i>
+                </button>
+                <span class="fw-semibold d-none d-sm-inline" style="font-family: 'Plus Jakarta Sans';">Yönetim Paneli</span>
+            </div>
+
+            <div class="d-flex align-items-center gap-2">
+                <a href="/" target="_blank" class="nav-icon-btn" title="Siteyi Görüntüle">
+                    <i class="bi bi-box-arrow-up-right"></i>
+                </a>
+                <a href="/Admin/Message/Index" class="nav-icon-btn" title="Mesajlar">
+                    <i class="bi bi-envelope"></i>
+                </a>
+
+                <div class="dropdown">
+                    <button class="nav-user-btn" data-bs-toggle="dropdown" aria-expanded="false">
+                        <div class="user-avatar">MY</div>
+                        <span class="fw-semibold d-none d-md-inline" style="font-size: 0.85rem;">Murat Yücedağ</span>
+                        <i class="bi bi-chevron-down small text-secondary d-none d-md-inline"></i>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" href="/Admin/Profile/Index"><i class="bi bi-person-circle"></i> Profilim</a></li>
+                        <li><a class="dropdown-item" href="/Admin/Setting/Index"><i class="bi bi-gear"></i> Ayarlar</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item text-danger" href="/Login/Logout"><i class="bi bi-box-arrow-right"></i> Çıkış Yap</a></li>
+                    </ul>
+                </div>
+            </div>
+        </header>
+
+        <!-- BREADCRUMB / URL -->
+        <div class="page-header">
+            <h1>@pageTitle</h1>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    @if (!string.IsNullOrEmpty(area))
+                    {
+                        <li class="breadcrumb-item"><a href="/@area"><i class="bi bi-house-door me-1"></i>@area</a></li>
+                    }
+                    @if (!string.IsNullOrEmpty(controller))
+                    {
+                        <li class="breadcrumb-item"><a href="@(string.IsNullOrEmpty(area) ? "" : "/" + area)/@controller">@controller</a></li>
+                    }
+                    @if (!string.IsNullOrEmpty(action))
+                    {
+                        <li class="breadcrumb-item active" aria-current="page">@action</li>
+                    }
+                </ol>
+            </nav>
+        </div>
+
+        <!-- CONTENT -->
+        <main class="main-body-container">
+            @RenderBody()
+        </main>
+
+        <!-- FOOTER -->
+        <footer class="admin-footer">
+            <span>© @DateTime.Now.Year Poyraz. Portfolio Admin — Tüm hakları saklıdır.</span>
+            <span>
+                <a href="/" target="_blank">Siteyi Görüntüle</a>
+                <span class="mx-2">•</span>
+                <span>v1.0</span>
+            </span>
+        </footer>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+            function toggleSidebar() {
+                document.body.classList.toggle("sidebar-open");
+            }
+    </script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
+
+

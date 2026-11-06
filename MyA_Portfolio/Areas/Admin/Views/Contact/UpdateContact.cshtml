@@ -1,0 +1,44 @@
+﻿@model Contact
+
+@{
+    ViewData["Title"] = "İletişim Bilgisi Güncelle";
+}
+
+<h2>İletişim Bilgisini Güncelle</h2>
+
+<form asp-action="UpdateContact" method="post">
+    <input type="hidden" asp-for="ContactId" />
+
+    <div class="mb-3">
+        <label asp-for="Description" class="form-label">Başlık</label>
+        <textarea asp-for="Description" class="form-control" rows="3"></textarea>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="SubDescription" class="form-label">Alt Açıklama</label>
+        <textarea asp-for="SubDescription" class="form-control" rows="2"></textarea>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Email" class="form-label">E-posta</label>
+        <input asp-for="Email" class="form-control" type="email" />
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Linkedin" class="form-label">LinkedIn</label>
+        <input asp-for="Linkedin" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Githup" class="form-label">Github</label>
+        <input asp-for="Githup" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Location" class="form-label">Lokasyon</label>
+        <input asp-for="Location" class="form-control" />
+    </div>
+
+    <button type="submit" class="btn btn-success">Güncelle</button>
+    <a asp-action="ContactList" class="btn btn-secondary">Vazgeç</a>
+</form>

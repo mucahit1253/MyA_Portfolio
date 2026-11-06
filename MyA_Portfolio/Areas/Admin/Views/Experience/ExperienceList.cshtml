@@ -1,0 +1,31 @@
+﻿@model List<Experience>
+
+<link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+<div class="contaniner">
+    <br /> <br />
+    <table class="table table-bordered"> 
+        <tr>
+            <th>#</th>
+            <th>Başlık</th>
+            <th>Alt Başlık</th>
+            <th>Tarih</th>
+            <th>Durum</th>
+            <th>Sil</th>
+            <th>Güncelle</th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.ExperienceId</td>
+                <td>@item.Title</td>
+                <td>@item.SideTitle</td>
+                <td>@item.Duration</td>
+                <td>@item.IsActive</td>
+                <td><a asp-controller="Experience" asp-action="DeleteExperience" asp-route-id="@item.ExperienceId" class="btn btn-danger">Sil</a></td>
+                <td><a asp-controller="Experience" asp-action="UpdateExperience" asp-route-id="@item.ExperienceId" class="btn btn-info">Güncelle</a></td>
+                
+            </tr>
+        }
+    </table>
+</div>

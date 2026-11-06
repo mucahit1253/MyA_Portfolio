@@ -1,0 +1,29 @@
+﻿@model List<MyA_Portfolio.Entities.Message>
+
+
+
+<div class="container">
+    <br />
+    <table class="table table-bordered">
+        <tr>
+            <th>#</th>
+            <th>Gönderici</th>
+            <th>Email</th>
+            <th>Konu</th>
+            <th>Tarih</th>
+            <th>Mesaj Aç</th>
+        </tr>
+        @foreach (var msg in Model)
+        {
+            <tr>
+                <td>@msg.MessageId</td>
+                <td>@msg.NameSurname</td>
+                <td>@msg.Email</td>
+                <td>@msg.Subject</td>
+                <td>@msg.SendDate.ToString("dd/mm/yyyy")</td>
+                <td><a asp-area="Admin" asp-controller="Message" asp-action="MessageDetail" asp-route-id="@msg.MessageId" class="btn btn-primary">Mesajı Aç</a></td>
+                <td><a asp-area="Admin" asp-controller="Message" asp-action="DeleteMessage" asp-route-id="@msg.MessageId" class="btn btn-danger">Mesajı Sil</a></td>
+            </tr>
+        }
+    </table>
+</div>

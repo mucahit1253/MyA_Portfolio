@@ -1,0 +1,38 @@
+﻿@model List<Contact>
+
+@{
+    ViewData["Title"] = "İletişim Bilgileri";
+}
+
+<h2>İletişim Bilgileri</h2>
+
+<a asp-action="CreateContact" class="btn btn-primary mb-3">Yeni Ekle</a>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Email</th>
+            <th>LinkedIn</th>
+            <th>Github</th>
+            <th>Lokasyon</th>
+            <th>Güncelle</th>
+            <th>Sil</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Email</td>
+                <td>@item.Linkedin</td>
+                <td>@item.Githup</td>
+                <td>@item.Location</td>
+                <td>
+                    <a asp-action="UpdateContact" asp-route-id="@item.ContactId" class="btn btn-sm btn-warning">Güncelle</a>
+                   
+                </td>
+                <td> <a asp-action="DeleteContact" asp-route-id="@item.ContactId" class="btn btn-sm btn-danger">Sil</a></td>
+            </tr>
+        }
+    </tbody>
+</table>

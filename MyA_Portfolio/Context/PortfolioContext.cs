@@ -15,5 +15,7 @@ namespace MyA_Portfolio.Context
         public DbSet<Message> Messages { get; set; }
         public DbSet<Contact> Contacts { get; set; }
         public DbSet<HeroSection> HeroSections { get; set; }
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<Project> Projects { get; set; }
     }
 }
