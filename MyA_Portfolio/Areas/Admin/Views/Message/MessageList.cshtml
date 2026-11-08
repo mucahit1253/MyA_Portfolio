@@ -1,28 +1,41 @@
-﻿@model List<MyA_Portfolio.Entities.Message>
-
-
-
+﻿@model List<Message>
+@{
+    ViewData["Title"] = "Mesaj Listesi";
+}
 <div class="container">
     <br />
-    <table class="table table-bordered">
+    <table class="table table-bordered align-middle">
         <tr>
             <th>#</th>
             <th>Gönderici</th>
             <th>Email</th>
             <th>Konu</th>
             <th>Tarih</th>
-            <th>Mesaj Aç</th>
+            <th>Durum</th>
+            <th>İşlemler</th>
         </tr>
         @foreach (var msg in Model)
         {
-            <tr>
+            <tr class="@(msg.IsRead ? "" : "table-secondary")">
                 <td>@msg.MessageId</td>
                 <td>@msg.NameSurname</td>
                 <td>@msg.Email</td>
                 <td>@msg.Subject</td>
-                <td>@msg.SendDate.ToString("dd/mm/yyyy")</td>
-                <td><a asp-area="Admin" asp-controller="Message" asp-action="MessageDetail" asp-route-id="@msg.MessageId" class="btn btn-primary">Mesajı Aç</a></td>
-                <td><a asp-area="Admin" asp-controller="Message" asp-action="DeleteMessage" asp-route-id="@msg.MessageId" class="btn btn-danger">Mesajı Sil</a></td>
+                <td>@msg.SendDate.ToString("dd/MM/yyyy")</td>
+                <td>
+                    @if (msg.IsRead)
+                    {
+                        <span class="badge text-bg-primary"><i class="bi bi-check2"></i> Okundu</span>
+                    }
+                    else
+                    {
+                        <span class="badge text-bg-danger"><i class="bi bi-envelope-fill"></i> Okunmadı</span>
+                    }
+                </td>
+                <td>
+                    <a asp-area="Admin" asp-controller="Message" asp-action="DetailMessage" asp-route-id="@msg.MessageId" class="btn btn-sm btn-primary">Mesajı Aç</a>
+                    <a asp-area="Admin" asp-controller="Message" asp-action="DeleteMessage" asp-route-id="@msg.MessageId" class="btn btn-sm btn-danger">Sil</a>
+                </td>
             </tr>
         }
     </table>

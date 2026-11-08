@@ -1,0 +1,51 @@
+﻿@model int
+<header class="admin-navbar">
+    <div class="d-flex align-items-center gap-3">
+        <button type="button" class="nav-icon-btn d-lg-none" onclick="toggleSidebar()" aria-label="Menü">
+            <i class="bi bi-list"></i>
+        </button>
+        <span class="fw-semibold d-none d-sm-inline" style="font-family: 'Plus Jakarta Sans';">Yönetim Paneli</span>
+    </div>
+
+    <div class="d-flex align-items-center gap-2">
+        <a asp-area="" asp-controller="Default" asp-action="Index" target="_blank" class="nav-icon-btn" title="Siteyi Görüntüle">
+            <i class="bi bi-box-arrow-up-right"></i>
+        </a>
+        <a asp-area="Admin" asp-controller="Message" asp-action="MessageList" class="nav-icon-btn" title="Mesajlar">
+            <i class="bi bi-envelope"></i>
+            @if (Model > 0)
+            {
+                <span id="headerUnreadBadge" class="notif-badge">@Model</span>
+            }
+            else
+            {
+                <span id="headerUnreadBadge" class="d-none">0</span>
+            }
+        </a>
+
+        <div class="dropdown">
+            <button class="nav-user-btn" data-bs-toggle="dropdown" aria-expanded="false">
+                <div class="user-avatar">MS</div>
+                <span class="fw-semibold d-none d-md-inline" style="font-size: 0.85rem;">Mehmet Mücahit Sarıdoğan</span>
+                <i class="bi bi-chevron-down small text-secondary d-none d-md-inline"></i>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end">
+                <li><a class="dropdown-item" href="/Admin/Profile/Index"><i class="bi bi-person-circle"></i> Profilim</a></li>
+                <li><a class="dropdown-item" href="/Admin/Setting/Index"><i class="bi bi-gear"></i> Ayarlar</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item text-danger" href="/Login/Logout"><i class="bi bi-box-arrow-right"></i> Çıkış Yap</a></li>
+            </ul>
+        </div>
+    </div>
+</header>
+
+<script>
+    // Diğer sayfalardan (örn. Dashboard) çağrılabilecek global fonksiyon
+    function decrementUnreadBadge() {
+        const headerBadge = document.getElementById("headerUnreadBadge");
+        if (headerBadge) {
+            const current = parseInt(headerBadge.innerText) || 0;
+            headerBadge.innerText = Math.max(current - 1, 0);
+        }
+    }
+</script>

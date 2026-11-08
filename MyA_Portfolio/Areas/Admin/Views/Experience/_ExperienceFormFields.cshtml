@@ -1,0 +1,85 @@
+@model ExperienceViewModel
+
+<div class="mb-3">
+    <label asp-for="Title" class="form-label">Başlık</label>
+    <input asp-for="Title" class="form-control" placeholder="örn: Software Engineer" />
+    <span asp-validation-for="Title" class="text-danger"></span>
+</div>
+
+<div class="mb-3">
+    <label asp-for="CompanyName" class="form-label">Şirket Adı</label>
+    <input asp-for="CompanyName" class="form-control" />
+    <span asp-validation-for="CompanyName" class="text-danger"></span>
+</div>
+
+<div class="mb-3">
+    <label asp-for="Description" class="form-label">Açıklama</label>
+    <textarea asp-for="Description" class="form-control" rows="4" placeholder="Her satır bir madde olarak gösterilecekse satır satır yazabilirsiniz."></textarea>
+    <span asp-validation-for="Description" class="text-danger"></span>
+</div>
+
+<div class="mb-3">
+    <label asp-for="SideTitle" class="form-label">Alt Başlık</label>
+    <input asp-for="SideTitle" class="form-control" placeholder="örn: Kurumsal Web Çözümleri" />
+    <span asp-validation-for="SideTitle" class="text-danger"></span>
+</div>
+
+<div class="row">
+    <div class="col-md-6 mb-3">
+        <label asp-for="Duration" class="form-label">Çalışma Zamanı</label>
+        <input asp-for="Duration" class="form-control" placeholder="örn: 2024 - Günümüz" />
+        <span asp-validation-for="Duration" class="text-danger"></span>
+    </div>
+
+    <div class="col-md-6 mb-3">
+        <label asp-for="WorkType" class="form-label">Çalışma Türü</label>
+        <select asp-for="WorkType" class="form-select">
+            <option value="">-- Seçiniz --</option>
+            <option value="Tam Zamanlı">Tam Zamanlı</option>
+            <option value="Yarı Zamanlı">Yarı Zamanlı</option>
+            <option value="Staj">Staj</option>
+            <option value="Freelance">Freelance</option>
+            <option value="Sözleşmeli">Sözleşmeli</option>
+        </select>
+        <span asp-validation-for="WorkType" class="text-danger"></span>
+    </div>
+</div>
+
+<div class="form-check mb-3">
+    <input asp-for="IsActive" class="form-check-input" />
+    <label asp-for="IsActive" class="form-check-label">Aktif (public sitede göster)</label>
+</div>
+
+<div class="mb-3">
+    <label class="form-label">Kullanılan Yetenekler</label>
+
+    @{
+        var skillGroups = (List<SkillGroup>)ViewBag.SkillGroups;
+    }
+
+    @if (skillGroups == null || !skillGroups.Any())
+    {
+        <p class="text-muted">Henüz yetenek kategorisi/yeteneği eklenmemiş.</p>
+    }
+    else
+    {
+        <div class="border rounded p-3">
+            @foreach (var group in skillGroups)
+            {
+                <div class="mb-2">
+                    <div class="fw-semibold mb-1">@group.Title</div>
+                    <div class="d-flex flex-wrap gap-3">
+                        @foreach (var skill in group.Skills)
+                        {
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="SelectedSkillIds" value="@skill.SkillId" id="skill-@skill.SkillId"
+                                       checked="@(Model.SelectedSkillIds.Contains(skill.SkillId))" />
+                                <label class="form-check-label" for="skill-@skill.SkillId">@skill.Name</label>
+                            </div>
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>

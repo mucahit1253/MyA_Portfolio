@@ -22,6 +22,21 @@ namespace MyA_Portfolio.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("ExperienceSkill", b =>
+                {
+                    b.Property<int>("ExperiencesExperienceId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SkillsSkillId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ExperiencesExperienceId", "SkillsSkillId");
+
+                    b.HasIndex("SkillsSkillId");
+
+                    b.ToTable("ExperienceSkill");
+                });
+
             modelBuilder.Entity("MyA_Portfolio.Entities.About", b =>
                 {
                     b.Property<int>("AboutId")
@@ -278,6 +293,67 @@ namespace MyA_Portfolio.Migrations
                     b.ToTable("Projects");
                 });
 
+            modelBuilder.Entity("MyA_Portfolio.Entities.Skill", b =>
+                {
+                    b.Property<int>("SkillId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SkillId"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("SkillGroupId")
+                        .HasColumnType("int");
+
+                    b.HasKey("SkillId");
+
+                    b.HasIndex("SkillGroupId");
+
+                    b.ToTable("Skills");
+                });
+
+            modelBuilder.Entity("MyA_Portfolio.Entities.SkillGroup", b =>
+                {
+                    b.Property<int>("SkillGroupId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SkillGroupId"));
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("IconClass")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("SkillGroupId");
+
+                    b.ToTable("SkillGroups");
+                });
+
+            modelBuilder.Entity("ExperienceSkill", b =>
+                {
+                    b.HasOne("MyA_Portfolio.Entities.Experience", null)
+                        .WithMany()
+                        .HasForeignKey("ExperiencesExperienceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MyA_Portfolio.Entities.Skill", null)
+                        .WithMany()
+                        .HasForeignKey("SkillsSkillId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("MyA_Portfolio.Entities.Project", b =>
                 {
                     b.HasOne("MyA_Portfolio.Entities.Category", "Category")
@@ -289,9 +365,25 @@ namespace MyA_Portfolio.Migrations
                     b.Navigation("Category");
                 });
 
+            modelBuilder.Entity("MyA_Portfolio.Entities.Skill", b =>
+                {
+                    b.HasOne("MyA_Portfolio.Entities.SkillGroup", "SkillGroup")
+                        .WithMany("Skills")
+                        .HasForeignKey("SkillGroupId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("SkillGroup");
+                });
+
             modelBuilder.Entity("MyA_Portfolio.Entities.Category", b =>
                 {
                     b.Navigation("Projects");
+                });
+
+            modelBuilder.Entity("MyA_Portfolio.Entities.SkillGroup", b =>
+                {
+                    b.Navigation("Skills");
                 });
 #pragma warning restore 612, 618
         }

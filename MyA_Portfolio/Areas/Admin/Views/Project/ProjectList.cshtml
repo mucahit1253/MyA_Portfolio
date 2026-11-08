@@ -1,0 +1,71 @@
+﻿@model List<Project>
+@{
+    ViewData["Title"] = "Proje Listesi";
+}
+<div class="container">
+    <a asp-action="ProjectCreat" class="btn btn-primary mb-3">Yeni Ekle</a>
+
+    <table class="table table-bordered align-middle">
+        <tr>
+            <th>#</th>
+            <th>Görsel</th>
+            <th>Başlık</th>
+            <th>Kategori</th>
+            <th>Github</th>
+            <th>Güncelle</th>
+            <th>Sil</th>
+        </tr>
+        @foreach (var project in Model)
+        {
+            <tr>
+                <td>@project.ProjectId</td>
+                <td>
+                    @if (!string.IsNullOrEmpty(project.CoverImageUrl))
+                    {
+                        <img src="@project.CoverImageUrl" alt="@project.Title" style="width:60px;height:40px;object-fit:cover;border-radius:4px;" />
+                    }
+                    else
+                    {
+                        <span class="text-muted">Yok</span>
+                    }
+                </td>
+                <td>@project.Title</td>
+                <td>@project.Category?.CategoryName</td>
+                <td>
+                    @if (!string.IsNullOrEmpty(project.GithubUrl))
+                    {
+                        <a href="@project.GithubUrl" target="_blank"><i class="bi bi-github"></i></a>
+                    }
+                </td>
+                <td><a asp-action="ProjectUpdate" asp-route-id="@project.ProjectId" class="btn btn-sm btn-warning">Güncelle</a></td>
+                <td>
+                    
+                    <a class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal-@project.ProjectId">
+                        Sil
+                    </a>
+                </td>
+            </tr>
+
+            <div class="modal fade" id="deleteModal-@project.ProjectId" tabindex="-1">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Proje Sil</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p><strong>@project.Title</strong> projesini silmek istediğinize emin misiniz?</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Vazgeç</button>
+                            <form asp-action="ProjectDelete" method="post">
+                                <input type="hidden" name="id" value="@project.ProjectId" />
+                                <button type="submit" class="btn btn-danger">Evet, Sil</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </table>
+</div>

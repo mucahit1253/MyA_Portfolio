@@ -1,0 +1,49 @@
+﻿@model List<Category>
+@{
+    ViewData["Title"] = "Kategoriy Listesi";
+}
+<div class="container">
+    <a asp-action="CategoryCreat" class="btn btn-primary mb-3">Yeni Ekle</a>
+
+    <table class="table table-bordered">
+        <tr>
+            <th>#</th>
+            <th>Kategori Adı</th>
+            <th>Güncelle</th>
+            <th>Sil</th>
+        </tr>
+        @foreach (var cat in Model)
+        {
+            <tr>
+                <td>@cat.CategoryId</td>
+                <td>@cat.CategoryName</td>
+                <td>
+                    <a asp-action="CategoryUpdate" asp-route-id="@cat.CategoryId" class="btn btn-sm btn-warning">Güncelle</a>
+
+                </td>
+                <td><a  asp-route-id="@cat.CategoryId" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal-@cat.CategoryId">Sil</a></td>
+            </tr>
+            <div class="modal fade" id="deleteModal-@cat.CategoryId" tabindex="-1">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Kategori Sil</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p><strong>@cat.CategoryName</strong> kategorisini silmek istediğinize emin misiniz?</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Vazgeç</button>
+                            <form asp-action="CategoryDelete" method="post">
+                                <input type="hidden" name="id" value="@cat.CategoryId" />
+                                <button type="submit" class="btn btn-danger">Evet, Sil</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        }
+    </table>
+</div>

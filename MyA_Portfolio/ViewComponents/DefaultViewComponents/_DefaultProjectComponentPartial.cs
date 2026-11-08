@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using MyA_Portfolio.Context;
 
 namespace MyA_Portfolio.ViewComponents.DefaultViewComponents
@@ -13,8 +14,8 @@ namespace MyA_Portfolio.ViewComponents.DefaultViewComponents
         }
         public IViewComponentResult Invoke()
         {
-            var query = _context.Projects.ToList();
-            return View();
+            var query = _context.Projects.Include(p => p.Category).ToList();
+            return View(query);
         }
     }
 }

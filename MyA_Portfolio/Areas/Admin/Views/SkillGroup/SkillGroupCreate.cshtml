@@ -1,0 +1,33 @@
+@model MyA_Portfolio.Areas.Admin.Models.SkillGroupViewModel
+
+@{
+    ViewData["Title"] = "Kategori Ekle";
+}
+
+<div class="container">
+    <h2>Yeni Yetenek Kategorisi Ekle</h2>
+
+    <form asp-action="SkillGroupCreate" method="post">
+        <div class="mb-3">
+            <label asp-for="Title" class="form-label">Başlık</label>
+            <input asp-for="Title" class="form-control" placeholder="örn: Backend Development" />
+            <span asp-validation-for="Title" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Description" class="form-label">Açıklama</label>
+            <textarea asp-for="Description" class="form-control" rows="3" placeholder="örn: Güvenli, modüler ve yüksek performanslı sunucu taraflı mimariler."></textarea>
+            <span asp-validation-for="Description" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="IconClass" class="form-label">İkon Sınıfı</label>
+            <input asp-for="IconClass" class="form-control" placeholder="örn: bi bi-hdd-network" />
+            <span asp-validation-for="IconClass" class="text-danger"></span>
+            <small class="text-muted d-block mt-1">Bootstrap Icons sınıf adı, isteğe bağlı.</small>
+        </div>
+
+        <button type="submit" class="btn btn-success">Kaydet</button>
+        <a asp-action="SkillGroupList" class="btn btn-secondary">Vazgeç</a>
+    </form>
+</div>

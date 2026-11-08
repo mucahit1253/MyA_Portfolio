@@ -17,5 +17,7 @@ namespace MyA_Portfolio.Context
         public DbSet<HeroSection> HeroSections { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Project> Projects { get; set; }
+        public DbSet<Skill> Skills { get; set; }
+        public DbSet<SkillGroup> SkillGroups { get; set; }
     }
 }

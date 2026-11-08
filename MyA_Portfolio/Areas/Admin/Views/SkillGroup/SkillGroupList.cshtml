@@ -1,0 +1,71 @@
+@model List<SkillGroup>
+
+@{
+    ViewData["Title"] = "Yetenek Kategorileri";
+}
+
+<div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <a asp-action="SkillGroupCreate" class="btn btn-primary">Yeni Ekle</a>
+        <a asp-controller="Skill" asp-action="SkillList" class="btn btn-outline-secondary">Yeteneklere Dön</a>
+    </div>
+
+    <table class="table table-bordered align-middle">
+        <tr>
+            <th>#</th>
+            <th>İkon</th>
+            <th>Başlık</th>
+            <th>Açıklama</th>
+            <th>İşlemler</th>
+        </tr>
+        @if (!Model.Any())
+        {
+            <tr><td colspan="5" class="text-center text-muted py-4">Henüz kategori eklenmemiş</td></tr>
+        }
+        else
+        {
+            @foreach (var group in Model)
+            {
+                <tr>
+                    <td>@group.SkillGroupId</td>
+                    <td>
+                        @if (!string.IsNullOrEmpty(group.IconClass))
+                        {
+                            <i class="@group.IconClass"></i>
+                        }
+                    </td>
+                    <td>@group.Title</td>
+                    <td class="text-muted">@group.Description</td>
+                    <td>
+                        <a asp-action="SkillGroupUpdate" asp-route-id="@group.SkillGroupId" class="btn btn-sm btn-warning">Düzenle</a>
+                        <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal-@group.SkillGroupId">
+                            Sil
+                        </button>
+                    </td>
+                </tr>
+
+                <div class="modal fade" id="deleteModal-@group.SkillGroupId" tabindex="-1">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Kategori Sil</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                            </div>
+                            <div class="modal-body">
+                                <p><strong>@group.Title</strong> kategorisini silmek istediğinize emin misiniz?</p>
+                                <p class="text-danger small mb-0">Bu kategoriye bağlı tüm yetenekler de silinecektir.</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Vazgeç</button>
+                                <form asp-action="SkillGroupDelete" method="post">
+                                    <input type="hidden" name="id" value="@group.SkillGroupId" />
+                                    <button type="submit" class="btn btn-danger">Evet, Sil</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    </table>
+</div>

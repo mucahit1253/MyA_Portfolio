@@ -1,26 +1,16 @@
-﻿@model Experience
+@model ExperienceViewModel
 
-<form  asp-controller="Experience" asp-action="CreateExperience" method="post">
+@{
+    ViewData["Title"] = "Yeni Deneyim";
+}
+
 <div class="container">
-    <br />
-    <label>Başlık</label>
-    <input type="text" asp-for="Title" class="form-control" />
-    <br />
-    <label>Şirket Adı</label>
-    <input type="text" asp-for="CompanyName" class="form-control" />
-    <br />
-    <label>Açıklama</label>
-    <input type="text" asp-for="Description" class="form-control" />
-    <br />
-    <label>Alt Başlık</label>
-    <input type="text" asp-for="SideTitle" class="form-control" />
-    <br />
-    <label>Çalışma Zamanı</label>
-    <input type="text" asp-for="Duration" class="form-control" />
-    <br />
-    <label>Çalışma Türü</label>
-    <input type="text" asp-for="WorkType" class="form-control" />
-    <br />
-    <button class="btn btn-info">Deneyim Kaydet</button>
+    <h2>Yeni Deneyim Ekle</h2>
+
+    <form asp-action="CreateExperience" method="post">
+        <partial name="_ExperienceFormFields" model="Model" />
+
+        <button type="submit" class="btn btn-success">Kaydet</button>
+        <a asp-action="ExperienceList" class="btn btn-secondary">Vazgeç</a>
+    </form>
 </div>
-</form>

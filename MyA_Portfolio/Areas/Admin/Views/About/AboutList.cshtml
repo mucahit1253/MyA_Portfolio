@@ -1,12 +1,8 @@
 ﻿@model List<About>
 
-
 @{
-    ViewData["Title"] = "About Listesi";
+    ViewData["Title"] = "Hakkında";
 }
-
-<h2>About Bilgileri</h2>
-
 <a asp-action="CreateAbout" class="btn btn-primary mb-3">Yeni Ekle</a>
 
 <table class="table table-bordered">
@@ -31,7 +27,7 @@
                 <td>@item.Expert</td>
                 <td>@item.Email</td>
                 <td>
-                    <a asp-action="UpdateAbout" asp-route-id="@item.AboutId" class="btn btn-sm btn-warning">Düzenle</a>
+                    <a asp-action="UpdateAbout" asp-route-id="@item.AboutId" class="btn btn-sm btn-warning">Güncelle</a>
                    
                 </td>
                 <td> <a asp-action="DeleteAbout" asp-route-id="@item.AboutId" class="btn btn-sm btn-danger">Sil</a></td>

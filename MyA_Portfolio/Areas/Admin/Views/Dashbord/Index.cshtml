@@ -1,0 +1,258 @@
+﻿@model DashboardViewModel
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<div class="row g-3">
+    <div class="col-xl-5">
+        <div class="card p-0">
+            <div class="d-flex justify-content-between align-items-center p-3 border-bottom">
+                <h5 class="mb-0">Son Mesajlar</h5>
+                <a asp-area="Admin" asp-controller="Message" asp-action="MessageList" class="btn btn-sm btn-outline-secondary">Tümünü Gör</a>
+            </div>
+            <div class="table-responsive">
+                <table class="table align-middle mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Gönderen</th>
+                            <th>Konu</th>
+                            <th>Tarih</th>
+                            <th>Durum</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (!Model.RecentMessages.Any())
+                        {
+                            <tr><td colspan="4" class="text-center text-muted py-4">Henüz mesaj yok</td></tr>
+                        }
+                        else
+                        {
+                            @foreach (var msg in Model.RecentMessages)
+                            {
+                                <tr class="message-row"
+                                    data-id="@msg.MessageId"
+                                    data-sender="@msg.SenderName"
+                                    data-subject="@msg.Subject"
+                                    data-date="@msg.SentDate.ToString("dd.MM.yyyy HH:mm")"
+                                    data-body="@msg.Body"
+                                    onclick="showMessage(this)" data-bs-toggle="modal" data-bs-target="#messageModal">
+                                    <td>@msg.SenderName</td>
+                                    <td>@msg.Subject</td>
+                                    <td>@msg.SentDate.ToString("dd.MM.yyyy HH:mm")</td>
+                                    <td>
+                                        <div class="d-flex align-items-center justify-content-between">
+                                            <span class="badge @(msg.IsRead ? "text-bg-secondary" : "text-bg-danger") read-badge">
+                                                @(msg.IsRead ? "Okundu" : "Yeni")
+                                            </span>
+                                            <i class="bi bi-chevron-right text-muted ms-2"></i>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div><!-- col-xl-5 kapanışı -->
+    <div class="col-xl-3">
+        <div class="card p-3 h-100">
+            <h5 class="mb-3">Hızlı Erişim</h5>
+            <div class="d-flex flex-column gap-2">
+                <a asp-area="Admin" asp-controller="About" asp-action="CreateAbout" class="quick-link">
+                    <span class="quick-icon bg-primary-subtle text-primary"><i class="bi bi-plus-lg"></i></span>
+                    <span>Hakkımda Kaydı Ekle</span>
+                    <i class="bi bi-chevron-right ms-auto text-muted"></i>
+                </a>
+                <a asp-area="Admin" asp-controller="Education" asp-action="CreateEducation" class="quick-link">
+                    <span class="quick-icon bg-info-subtle text-info"><i class="bi bi-mortarboard"></i></span>
+                    <span>Eğitim Ekle</span>
+                    <i class="bi bi-chevron-right ms-auto text-muted"></i>
+                </a>
+                <a asp-area="Admin" asp-controller="Experience" asp-action="CreateExperience" class="quick-link">
+                    <span class="quick-icon bg-success-subtle text-success"><i class="bi bi-briefcase"></i></span>
+                    <span>Deneyim Ekle</span>
+                    <i class="bi bi-chevron-right ms-auto text-muted"></i>
+                </a>
+                <a asp-area="Admin" asp-controller="Category" asp-action="CategoryCreat" class="quick-link">
+                    <span class="quick-icon bg-warning-subtle text-warning"><i class="bi bi-tags"></i></span>
+                    <span>Kategori Ekle</span>
+                    <i class="bi bi-chevron-right ms-auto text-muted"></i>
+                </a>
+                <a asp-area="Admin" asp-controller="Project" asp-action="ProjectCreat" class="quick-link">
+                    <span class="quick-icon bg-purple-subtle text-purple"><i class="bi bi-kanban"></i></span>
+                    <span>Proje Ekle</span>
+                    <i class="bi bi-chevron-right ms-auto text-muted"></i>
+                </a>
+                <a asp-area="Admin" asp-controller="Message" asp-action="MessageList" class="quick-link">
+                    <span class="quick-icon bg-danger-subtle text-danger"><i class="bi bi-envelope"></i></span>
+                    <span>Mesajları Gör</span>
+                    <i class="bi bi-chevron-right ms-auto text-muted"></i>
+                </a>
+            </div>
+        </div>
+    </div><!-- col-xl-3 kapanışı -->
+    <div class="col-xl-4">
+        <div class="card p-3 h-100">
+            <h5 class="mb-3">Kategori Bazında Projeler</h5>
+
+            @if (!Model.ProjectsByCategory.Any())
+            {
+                <p class="text-muted mb-0">Henüz kategori yok.</p>
+            }
+            else
+            {
+                var maxCount = Model.ProjectsByCategory.Max(c => c.ProjectCount);
+                if (maxCount == 0) { maxCount = 1; }
+
+                @foreach (var item in Model.ProjectsByCategory)
+                {
+                    var percent = (item.ProjectCount * 100) / maxCount;
+                    <div class="mb-3">
+                        <div class="d-flex justify-content-between mb-1">
+                            <span style="font-size:0.88rem;">@item.CategoryName</span>
+                            <span class="fw-semibold" style="font-size:0.88rem;">@item.ProjectCount proje</span>
+                        </div>
+                        <div class="progress" style="height:8px;">
+                            <div class="progress-bar bg-purple" style="width:@percent%;"></div>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    </div><!-- col-xl-4 kapanışı -->
+</div><!-- row kapanışı -->
+
+<!-- Modal, en dışarıda duruyor -->
+<div class="modal fade" id="messageModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalSubject"></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <p class="mb-1"><strong>Gönderen:</strong> <span id="modalSender"></span></p>
+                <p class="mb-1"><strong>Tarih:</strong> <span id="modalDate"></span></p>
+                <hr />
+                <p id="modalBody" style="white-space: pre-line;"></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .stat-card {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        background: #fff;
+        border: 1px solid #eceef3;
+        border-radius: 0.75rem;
+        padding: 1.1rem 1.25rem;
+    }
+
+    .stat-icon {
+        width: 48px;
+        height: 48px;
+        border-radius: 0.6rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.3rem;
+    }
+
+    .stat-label {
+        font-size: 0.8rem;
+        color: #6c757d;
+    }
+
+    .stat-value {
+        font-size: 1.5rem;
+        font-weight: 700;
+        font-family: 'Plus Jakarta Sans';
+    }
+
+    .quick-link {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.65rem 0.8rem;
+        border: 1px solid #eceef3;
+        border-radius: 0.6rem;
+        text-decoration: none;
+        color: #1f2937;
+        font-weight: 500;
+        font-size: 0.9rem;
+        transition: background 0.15s ease, border-color 0.15s ease, transform 0.1s ease;
+    }
+
+        .quick-link:hover {
+            background: #f8f9fc;
+            border-color: #d9deeb;
+            color: #1f2937;
+            transform: translateX(2px);
+        }
+
+    .quick-icon {
+        width: 34px;
+        height: 34px;
+        border-radius: 0.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1rem;
+        flex-shrink: 0;
+    }
+
+    .message-row {
+        cursor: pointer;
+        transition: background 0.15s ease;
+    }
+
+        .message-row:hover {
+            background: #f8f9fc;
+        }
+
+    .bg-purple-subtle {
+        background-color: #f1e9fc;
+    }
+
+    .text-purple {
+        color: #6f42c1;
+    }
+    .bg-purple {
+        background-color: #6f42c1;
+    }
+</style>
+
+<script>
+    function showMessage(row) {
+        document.getElementById("modalSubject").innerText = row.dataset.subject;
+        document.getElementById("modalSender").innerText = row.dataset.sender;
+        document.getElementById("modalDate").innerText = row.dataset.date;
+        document.getElementById("modalBody").innerText = row.dataset.body;
+
+        const badge = row.querySelector(".read-badge");
+        if (badge.innerText === "Yeni") {
+            fetch(`/Admin/Message/MarkAsRead/${row.dataset.id}`, { method: "POST" })
+                .then(res => {
+                    if (!res.ok) throw new Error("HTTP " + res.status);
+                    return res;
+                })
+                .then(() => {
+                    badge.innerText = "Okundu";
+                    badge.classList.remove("text-bg-danger");
+                    badge.classList.add("text-bg-secondary");
+                    decrementUnreadBadge(); // header
+
+                    const statCount = document.getElementById("unreadStatCount");
+                    if (statCount) {
+                        const current = parseInt(statCount.innerText) || 0;
+                        statCount.innerText = Math.max(current - 1, 0);
+                    }
+                })
+                .catch(err => console.error("MarkAsRead isteği başarısız:", err));
+        }
+    }
+</script>

@@ -4,8 +4,6 @@
     ViewData["Title"] = "Eğitim Bilgileri";
 }
 
-<h2>Eğitim Bilgileri</h2>
-
 <a asp-action="CreateEducation" class="btn btn-primary mb-3">Yeni Ekle</a>
 
 <table class="table table-bordered">
@@ -26,7 +24,7 @@
                 <td>@item.SubTitle</td>
                 <td>@item.Duration</td>
                 <td>
-                    <a asp-action="UpdateEducation" asp-route-id="@item.EducationId" class="btn btn-sm btn-warning">Düzenle</a>
+                    <a asp-action="UpdateEducation" asp-route-id="@item.EducationId" class="btn btn-sm btn-warning">Güncelle</a>
                    
                 </td>
                 <td> <a asp-action="DeleteEducation" asp-route-id="@item.EducationId" class="btn btn-sm btn-danger">Sil</a></td>

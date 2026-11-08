@@ -1,31 +1,80 @@
-﻿@model List<Experience>
+@model List<Experience>
 
-<link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+@{
+    ViewData["Title"] = "Deneyimlerim";
+}
 
-<div class="contaniner">
-    <br /> <br />
-    <table class="table table-bordered"> 
+<div class="container">
+    <a asp-action="CreateExperience" class="btn btn-primary mb-3">Yeni Ekle</a>
+
+    <table class="table table-bordered align-middle">
         <tr>
             <th>#</th>
             <th>Başlık</th>
-            <th>Alt Başlık</th>
-            <th>Tarih</th>
+            <th>Şirket</th>
+            <th>Çalışma Zamanı</th>
+            <th>Yetenekler</th>
             <th>Durum</th>
-            <th>Sil</th>
-            <th>Güncelle</th>
+            <th>İşlemler</th>
         </tr>
-        @foreach (var item in Model)
+        @if (!Model.Any())
         {
-            <tr>
-                <td>@item.ExperienceId</td>
-                <td>@item.Title</td>
-                <td>@item.SideTitle</td>
-                <td>@item.Duration</td>
-                <td>@item.IsActive</td>
-                <td><a asp-controller="Experience" asp-action="DeleteExperience" asp-route-id="@item.ExperienceId" class="btn btn-danger">Sil</a></td>
-                <td><a asp-controller="Experience" asp-action="UpdateExperience" asp-route-id="@item.ExperienceId" class="btn btn-info">Güncelle</a></td>
-                
-            </tr>
+            <tr><td colspan="7" class="text-center text-muted py-4">Henüz deneyim eklenmemiş</td></tr>
+        }
+        else
+        {
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.ExperienceId</td>
+                    <td>@item.Title</td>
+                    <td>@item.CompanyName</td>
+                    <td>@item.Duration</td>
+                    <td>
+                        @foreach (var skill in item.Skills)
+                        {
+                            <span class="badge text-bg-light border me-1">@skill.Name</span>
+                        }
+                    </td>
+                    <td>
+                        @if (item.IsActive)
+                        {
+                            <span class="badge text-bg-success">Aktif</span>
+                        }
+                        else
+                        {
+                            <span class="badge text-bg-secondary">Pasif</span>
+                        }
+                    </td>
+                    <td>
+                        <a asp-action="UpdateExperience" asp-route-id="@item.ExperienceId" class="btn btn-sm btn-warning">Düzenle</a>
+                        <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal-@item.ExperienceId">
+                            Sil
+                        </button>
+                    </td>
+                </tr>
+
+                <div class="modal fade" id="deleteModal-@item.ExperienceId" tabindex="-1">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Deneyim Sil</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                            </div>
+                            <div class="modal-body">
+                                <p><strong>@item.Title</strong> (@item.CompanyName) deneyimini silmek istediğinize emin misiniz?</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Vazgeç</button>
+                                <form asp-action="DeleteExperience" method="post">
+                                    <input type="hidden" name="id" value="@item.ExperienceId" />
+                                    <button type="submit" class="btn btn-danger">Evet, Sil</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
         }
     </table>
 </div>

@@ -39,5 +39,30 @@ namespace MyA_Portfolio.Areas.Admin.Controllers
             _context.SaveChanges();
             return RedirectToAction("MessageList");
         }
+        [HttpPost]
+        public IActionResult MarkAsRead(int id)
+        {
+            var message = _context.Messages.FirstOrDefault(m => m.MessageId == id);
+            if (message != null && !message.IsRead)
+            {
+                message.IsRead = true;
+                _context.SaveChanges();
+            }
+            return Ok();
+        }
+
+        public IActionResult DetailMessage(int id)
+        {
+            var message = _context.Messages.FirstOrDefault(m => m.MessageId == id);
+            if (message == null) return NotFound();
+
+            if (!message.IsRead)
+            {
+                message.IsRead = true;
+                _context.SaveChanges();
+            }
+
+            return View(message);
+        }
     }
 }

@@ -1,0 +1,42 @@
+﻿@model ProjectViewModel
+
+@{
+    ViewData["Title"] = "Proje Ekle";
+}
+<form asp-action="ProjectCreat" method="post" enctype="multipart/form-data">
+    <div class="mb-3">
+        <label asp-for="Title" class="form-label">Proje Başlığı</label>
+        <input asp-for="Title" class="form-control" />
+        <span asp-validation-for="Title" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Description" class="form-label">Açıklama</label>
+        <textarea asp-for="Description" class="form-control" rows="4"></textarea>
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="GithubUrl" class="form-label">Github URL</label>
+        <input asp-for="GithubUrl" class="form-control" placeholder="https://github.com/..." />
+        <span asp-validation-for="GithubUrl" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="CoverImageFile" class="form-label">Kapak Görseli</label>
+        <input asp-for="CoverImageFile" class="form-control" type="file" accept=".jpg,.jpeg,.png,.webp" />
+        <span asp-validation-for="CoverImageFile" class="text-danger"></span>
+        <small class="text-muted d-block mt-1">JPG, PNG veya WEBP — en fazla 3 MB.</small>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="CategoryId" class="form-label">Kategori</label>
+        <select asp-for="CategoryId" asp-items="ViewBag.Categories" class="form-select">
+            <option value="">-- Kategori Seçiniz --</option>
+        </select>
+        <span asp-validation-for="CategoryId" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-success">Kaydet</button>
+    <a asp-action="ProjectList" class="btn btn-secondary">Vazgeç</a>
+</form>
