@@ -19,19 +19,7 @@ namespace MyA_Portfolio.Areas.Admin.Controllers
             var values = _context.Messages.ToList();
             return View(values);
         }
-        public IActionResult CreateMessage()
-        {
-            return View();
-        }
-        [HttpPost]
-        public IActionResult CreateMessage(Message message)
-        {
-            message.SendDate = DateTime.Now;
-            message.IsRead = false;
-            _context.Messages.Add(message);
-            _context.SaveChanges();
-            return RedirectToAction("MessageList");
-        }
+        
         public IActionResult DeleteMessage(int id)
         {
             var values = _context.Messages.Find(id);

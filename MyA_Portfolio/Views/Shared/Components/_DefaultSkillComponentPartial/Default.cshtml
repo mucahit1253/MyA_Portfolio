@@ -1,0 +1,42 @@
+﻿@model List<SkillGroup>
+<section id="skills" style="background-color: var(--bg-secondary);">
+    <div class="container">
+        <div class="text-center mb-5 reveal-on-scroll">
+            <span class="section-eyebrow">TEKNİK YETKİNLİKLER</span>
+            <h2 class="section-title">Yeteneklerim</h2>
+            <p class="section-subtitle">Fikirleri çalışan yazılımlara dönüştürürken kullandığım teknolojiler.</p>
+        </div>
+
+        <div class="row g-4">
+            @foreach (var item in Model)
+            {
+                <!-- 1. Backend Development -->
+                <div class="col-lg-4 col-md-6 reveal-on-scroll">
+                    <div class="skill-group-card">
+                        <div class="d-flex align-items-center gap-3 mb-3">
+                            <div class="float-icon-box bg-icon-purple">
+                                <i class="bi bi-hdd-network"></i>
+                            </div>
+                            <h4 class="fs-5 fw-bold mb-0">@item.Title</h4>
+                        </div>
+                        <p class="text-secondary small mb-3">@item.Description</p>
+                        <div class="d-flex flex-wrap">
+                        @foreach (var skll in item.Skills)
+                        {
+                            
+                                <span class="skill-chip"><i class="bi bi-check text-success"></i> @skll.Name</span>
+                           
+                        }
+                        </div>
+                      
+                            
+                        
+                    </div>
+                </div>
+            }
+           
+
+         
+        </div>
+    </div>
+</section>

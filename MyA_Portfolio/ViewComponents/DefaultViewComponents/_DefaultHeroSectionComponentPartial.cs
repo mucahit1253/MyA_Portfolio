@@ -14,11 +14,11 @@ namespace MyA_Portfolio.ViewComponents.DefaultViewComponents
 
         public IViewComponentResult Invoke()
         {
-            var values = _context.HeroSections.FirstOrDefault();
-            ViewBag.v1 = values.Title;
-            ViewBag.v2 = values.SubTitle;
-            ViewBag.v3 = values.Description;
-            ViewBag.v4 = values.ImageUrl;
+            var hero = _context.HeroSections.FirstOrDefault(); // tek satırlık kayıt
+            var contact = _context.Contacts.FirstOrDefault();
+
+            ViewBag.Hero = hero;
+            ViewBag.Contact = contact;
             return View();
         }
     }

@@ -1,0 +1,12 @@
+﻿@model List<Skill>
+
+<div class="marquee-container">
+    <div class="marquee-track">
+        @foreach (var item in Model)
+        {
+            <div class="marquee-item"><i class="bi bi-check2-circle"></i> @item.Name</div>
+        }
+       
+        
+    </div>
+</div>

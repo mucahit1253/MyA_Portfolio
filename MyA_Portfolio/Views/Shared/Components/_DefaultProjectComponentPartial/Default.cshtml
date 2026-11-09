@@ -12,16 +12,20 @@
         <!-- Category Filter Buttons -->
         <div class="d-flex justify-content-center flex-wrap gap-2 mb-5 reveal-on-scroll" id="projectFilterGroup">
             <button class="filter-btn active" data-filter="all">Tümü</button>
-            <button class="filter-btn" data-filter="web-app">Web Uygulamaları</button>
-            <button class="filter-btn" data-filter="dashboard">Dashboard</button>
-            <button class="filter-btn" data-filter="api-projects">API Projeleri</button>
+            @foreach (var ctg in Model.Select(p=>p.Category).DistinctBy(p=>p.CategoryId))
+            {
+                
+                <button class="filter-btn" data-filter="@ctg.CategoryName">@ctg.CategoryName</button>
+            }
+            
+           
         </div>
 
         <!-- Project Cards Grid -->
         <div class="row g-4" id="projectGrid">
             @foreach (var item in Model)
             {
-                <div class="col-lg-4 col-md-6 project-item" data-category="web-app">
+                <div class="col-lg-4 col-md-6 project-item" data-category="@item.Category.CategoryName">
                     <div class="project-card reveal-on-scroll">
 
                         <!-- Project Image -->

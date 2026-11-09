@@ -5,11 +5,11 @@
             <!-- Left Content -->
             <div class="col-lg-7 reveal-on-scroll">
                 <div class="hero-badge">
-                    <span>👋</span> @ViewBag.v1
+                    <span>👋</span> @ViewBag.Hero.Title
                 </div>
 
                 <h1 class="hero-title">
-                    Merhaba, Ben <span class="hero-name-gradient">@ViewBag.v2</span>.
+                    Merhaba, Ben <span class="hero-name-gradient">@ViewBag.Hero.SubTitle</span>
                 </h1>
 
                 <!-- Animated Typing Text Slider -->
@@ -18,7 +18,7 @@
                 </div>
 
                 <p class="hero-desc">
-                    @ViewBag.v3
+                    @ViewBag.Hero.Description
                 </p>
 
                 <div class="d-flex flex-wrap gap-3 align-items-center mb-4">
@@ -35,16 +35,16 @@
                 <!-- Social Links -->
                 <div class="d-flex align-items-center gap-2 pt-2">
                     <span class="text-secondary small fw-medium me-2">Bağlantılar:</span>
-                    <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="social-btn" aria-label="GitHub Profilim">
+                    <a href="@ViewBag.Contact.Githup" target="_blank" rel="noopener noreferrer" class="social-btn" aria-label="GitHub Profilim">
                         <i class="bi bi-github"></i>
                     </a>
-                    <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="social-btn" aria-label="LinkedIn Profilim">
+                    <a href="@ViewBag.Contact.Linkedin" target="_blank" rel="noopener noreferrer" class="social-btn" aria-label="LinkedIn Profilim">
                         <i class="bi bi-linkedin"></i>
-                    </a>
-                    <a href="https://medium.com" target="_blank" rel="noopener noreferrer" class="social-btn" aria-label="Medium Yazılarım">
+                     </a>
+                    <a href="mailto:@ViewBag.Contact.Email" target="_blank" rel="noopener noreferrer" class="social-btn" aria-label="Medium Yazılarım">
                         <i class="bi bi-medium"></i>
                     </a>
-                    <a href="mailto:poyraz.alsever@example.com" class="social-btn" aria-label="E-posta Gönder">
+                    <a href="mailto:@ViewBag.Contact.Email" class="social-btn" aria-label="E-posta Gönder">
                         <i class="bi bi-envelope"></i>
                     </a>
                 </div>

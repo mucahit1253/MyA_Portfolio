@@ -1,0 +1,102 @@
+﻿@model List<Experience>
+
+<section id="experience">
+    <div class="container">
+        <div class="text-center mb-5 reveal-on-scroll">
+            <span class="section-eyebrow">PROFESYONEL YOLCULUK</span>
+            <h2 class="section-title">Deneyimlerim</h2>
+            <p class="section-subtitle">Gerçek dünya problemlerini çözerken edindiğim tecrübeler.</p>
+        </div>
+
+        <div class="timeline-container">
+            @{
+                int i = 0;
+            }
+            @foreach (var exp in Model)
+            {
+                bool isEven = i % 2 == 0;
+
+                string badgeClass = exp.WorkType switch
+                {
+                    "Tam Zamanlı" => "bg-success-subtle text-success border-success-subtle",
+                    "Yarı Zamanlı" => "bg-primary-subtle text-primary border-primary-subtle",
+                    "Staj" => "bg-warning-subtle text-warning border-warning-subtle",
+                    "Freelance" => "bg-info-subtle text-info border-info-subtle",
+                    "Sözleşmeli" => "bg-secondary-subtle text-secondary border-secondary-subtle",
+                    _ => "bg-secondary-subtle text-secondary border-secondary-subtle"
+                };
+
+                <div class="timeline-item row align-items-center g-4 reveal-on-scroll">
+                    <div class="col-lg-6 timeline-left @(isEven ? "order-2 order-lg-1" : "d-none d-lg-block")">
+                        @if (isEven)
+                        {
+                            <div class="timeline-content-card">
+                                <div class="d-flex justify-content-between align-items-start mb-2">
+                                    <span class="badge-year bg-icon-purple">
+                                        <i class="bi bi-briefcase"></i> @exp.Duration
+                                    </span>
+                                    <span class="badge @badgeClass border rounded-pill px-3 py-1 small">
+                                        @exp.WorkType
+                                    </span>
+                                </div>
+
+                                <h4 class="fs-5 fw-bold mb-1">@exp.Title</h4>
+                                <div class="text-primary fw-semibold small mb-3">@exp.CompanyName</div>
+
+                                <p class="text-secondary small mb-3" style="line-height: 1.6;">@exp.Description</p>
+
+                                <div>
+                                    @foreach (var skill in exp.Skills)
+                                    {
+                                        <span class="tech-tag">@skill.Name</span>
+                                    }
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="text-secondary small fst-italic">@exp.SideTitle</div>
+                        }
+                    </div>
+
+                    <div class="timeline-marker">
+                        <i class="bi bi-briefcase"></i>
+                    </div>
+
+                    <div class="col-lg-6 timeline-right @(isEven ? "order-1 order-lg-2 d-none d-lg-block" : "")">
+                        @if (isEven)
+                        {
+                            <div class="text-secondary small fst-italic">@exp.SideTitle</div>
+                        }
+                        else
+                        {
+                            <div class="timeline-content-card">
+                                <div class="d-flex justify-content-between align-items-start mb-2">
+                                    <span class="badge-year bg-icon-purple">
+                                        <i class="bi bi-briefcase"></i> @exp.Duration
+                                    </span>
+                                    <span class="badge @badgeClass border rounded-pill px-3 py-1 small">
+                                        @exp.WorkType
+                                    </span>
+                                </div>
+
+                                <h4 class="fs-5 fw-bold mb-1">@exp.Title</h4>
+                                <div class="text-primary fw-semibold small mb-3">@exp.CompanyName</div>
+
+                                <p class="text-secondary small mb-3" style="line-height: 1.6;">@exp.Description</p>
+
+                                <div>
+                                    @foreach (var skill in exp.Skills)
+                                    {
+                                        <span class="tech-tag">@skill.Name</span>
+                                    }
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+                i++;
+            }
+        </div>
+    </div>
+</section>
