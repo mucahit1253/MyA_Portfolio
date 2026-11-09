@@ -1,6 +1,4 @@
-﻿@model About
-
-
+@model MyA_Portfolio.Areas.Admin.Models.AboutViewModel
 
 @{
     ViewData["Title"] = "Hakkında Ekle";
@@ -8,40 +6,52 @@
 
 <h2>Yeni About Bilgisi Ekle</h2>
 
-<form asp-action="CreateAbout" method="post">
+<form asp-action="CreateAbout" method="post" enctype="multipart/form-data">
     <div class="mb-3">
         <label asp-for="NameSurname" class="form-label">Ad Soyad</label>
         <input asp-for="NameSurname" class="form-control" />
+        <span asp-validation-for="NameSurname" class="text-danger"></span>
     </div>
 
     <div class="mb-3">
         <label asp-for="JobTitle" class="form-label">Ünvan</label>
         <input asp-for="JobTitle" class="form-control" />
+        <span asp-validation-for="JobTitle" class="text-danger"></span>
     </div>
 
     <div class="mb-3">
         <label asp-for="Location" class="form-label">Lokasyon</label>
         <input asp-for="Location" class="form-control" />
+        <span asp-validation-for="Location" class="text-danger"></span>
     </div>
 
     <div class="mb-3">
         <label asp-for="Expert" class="form-label">Uzmanlık</label>
         <input asp-for="Expert" class="form-control" />
+        <span asp-validation-for="Expert" class="text-danger"></span>
     </div>
 
     <div class="mb-3">
         <label asp-for="Email" class="form-label">E-posta</label>
         <input asp-for="Email" class="form-control" type="email" />
+        <span asp-validation-for="Email" class="text-danger"></span>
     </div>
 
     <div class="mb-3">
         <label asp-for="Description" class="form-label">Açıklama</label>
         <textarea asp-for="Description" class="form-control" rows="4"></textarea>
+        <span asp-validation-for="Description" class="text-danger"></span>
     </div>
 
     <div class="mb-3">
         <label asp-for="OpenToWork" class="form-label">İş Durumu</label>
         <input asp-for="OpenToWork" class="form-control" />
+        <span asp-validation-for="OpenToWork" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">CV (PDF)</label>
+        <input asp-for="CvFile" class="form-control" accept=".pdf" />
     </div>
 
     <button type="submit" class="btn btn-success">Kaydet</button>

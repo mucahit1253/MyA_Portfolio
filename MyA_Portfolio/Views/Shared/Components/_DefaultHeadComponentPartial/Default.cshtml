@@ -1,7 +1,19 @@
-﻿<head>
+@model MyA_Portfolio.Entities.Setting
+
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mehmet Mücahit Sarıdoğan | Bilgisayar Mühendisi & Full Stack Developer</title>
+    <title>@(Model?.SiteTitle ?? "Mehmet Mücahit Sarıdoğan | Bilgisayar Mühendisi & Full Stack Developer")</title>
+
+    @if (!string.IsNullOrEmpty(Model?.MetaDescription))
+    {
+        <meta name="description" content="@Model.MetaDescription">
+    }
+
+    @if (!string.IsNullOrEmpty(Model?.FaviconUrl))
+    {
+        <link rel="icon" type="image/x-icon" href="@Model.FaviconUrl">
+    }
 
     <!-- Google Fonts: Plus Jakarta Sans & Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">

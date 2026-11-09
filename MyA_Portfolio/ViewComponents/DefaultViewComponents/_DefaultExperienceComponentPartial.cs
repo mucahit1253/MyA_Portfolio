@@ -15,7 +15,7 @@ namespace MyA_Portfolio.ViewComponents.DefaultViewComponents
 
         public IViewComponentResult Invoke()
         {
-            var values = _context.Experiences.Include(p=>p.Skills).ToList();
+            var values = _context.Experiences.Include(p=>p.Skills).Where(p=>p.IsActive).ToList();
             
             return View(values);
         }

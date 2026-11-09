@@ -10,5 +10,6 @@
         public string Email { get; set; }
         public string  Description { get; set; }
         public string OpenToWork { get; set; }
+        public string? CvFileUrl { get; set; }
     }
 }

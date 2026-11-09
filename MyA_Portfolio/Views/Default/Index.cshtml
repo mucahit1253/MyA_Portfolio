@@ -1,4 +1,4 @@
-﻿@{
+@{
     Layout = null;
 }
 <!DOCTYPE html>
@@ -204,17 +204,21 @@
                 @await Component.InvokeAsync("_DefaultContactComponentPartial")
                 @await Component.InvokeAsync("_DefaultMessageComponentPartial")
            </div>
-        </div>
+        </div>W
     </section>
     <!-- Footer -->
     <footer>
+        @{
+            string fullName = ViewBag.About.NameSurname ;
+            string firstLetter = fullName.Length > 0 ? fullName.Substring(0, 1).ToUpper() : " ";
+        }
         <div class="container">
             <div class="row g-4 align-items-center mb-5">
                 <!-- Col 1: Brand -->
                 <div class="col-lg-4 text-center text-lg-start">
                     <a class="navbar-brand d-inline-flex align-items-center mb-2" href="#home">
-                        <span class="brand-mark">P</span>
-                        <span class="brand-name">Poyraz<span>.</span></span>
+                        <span class="brand-mark">@firstLetter</span>
+                        <span class="brand-name">@fullName<span>.</span></span>
                     </a>
                     <p class="text-secondary small mb-0">Teknoloji, tasarım ve yaratıcılıkla geliştirildi.</p>
                 </div>
@@ -232,13 +236,13 @@
                 <!-- Col 3: Social Links -->
                 <div class="col-lg-4 text-center text-lg-end">
                     <div class="d-inline-flex gap-2">
-                        <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="social-btn" aria-label="GitHub">
+                        <a href="@ViewBag.Contact.Githup" target="_blank" rel="noopener noreferrer" class="social-btn" aria-label="GitHub">
                             <i class="bi bi-github"></i>
                         </a>
-                        <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="social-btn" aria-label="LinkedIn">
+                        <a href="@ViewBag.Contact.Linkedin" target="_blank" rel="noopener noreferrer" class="social-btn" aria-label="LinkedIn">
                             <i class="bi bi-linkedin"></i>
                         </a>
-                        <a href="https://medium.com" target="_blank" rel="noopener noreferrer" class="social-btn" aria-label="Medium">
+                        <a href="mailto:@ViewBag.Contact.Email" target="_blank" rel="noopener noreferrer" class="social-btn" aria-label="Medium">
                             <i class="bi bi-medium"></i>
                         </a>
                     </div>
@@ -248,7 +252,7 @@
             <hr class="text-secondary opacity-25 mb-4">
 
             <div class="text-center">
-                <p class="text-secondary small mb-0">© 2026 Poyraz Alsever. Tüm hakları saklıdır.</p>
+                <p class="text-secondary small mb-0">@(ViewBag.Setting?.FooterText ?? "© 2026 Poyraz Alsever. Tüm hakları saklıdır.")</p>
             </div>
         </div>
     </footer>

@@ -7,6 +7,7 @@
         public string? Description { get; set; }
         public string? GithubUrl { get; set; }
         public string? CoverImageUrl { get; set; }
+        public bool IsActive { get; set; }
         public int CategoryId { get; set; }
         public Category Category { get; set; }
     }

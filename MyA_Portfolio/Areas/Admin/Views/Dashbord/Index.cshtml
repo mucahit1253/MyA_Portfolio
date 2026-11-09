@@ -2,7 +2,44 @@
 @{
     ViewData["Title"] = "Dashboard";
 }
-
+<div class="row g-3 mb-3">
+    <div class="col-xl-3 col-sm-6">
+        <div class="stat-card">
+            <div class="stat-icon bg-purple-subtle text-purple"><i class="bi bi-kanban"></i></div>
+            <div>
+                <div class="stat-label">Toplam Proje</div>
+                <div class="stat-value">@Model.ProjeCount</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-3 col-sm-6">
+        <div class="stat-card">
+            <div class="stat-icon bg-success-subtle text-success"><i class="bi bi-check-circle"></i></div>
+            <div>
+                <div class="stat-label">Aktif Proje</div>
+                <div class="stat-value">@Model.ActiveProjectCount</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-3 col-sm-6">
+        <div class="stat-card">
+            <div class="stat-icon bg-info-subtle text-info"><i class="bi bi-lightning"></i></div>
+            <div>
+                <div class="stat-label">Toplam Yetenek</div>
+                <div class="stat-value">@Model.SkillCount</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-3 col-sm-6">
+        <div class="stat-card">
+            <div class="stat-icon bg-danger-subtle text-danger"><i class="bi bi-envelope"></i></div>
+            <div>
+                <div class="stat-label">Okunmamış Mesaj</div>
+                <div class="stat-value" id="unreadStatCount">@Model.UnreadMessageCount</div>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="row g-3">
     <div class="col-xl-5">
         <div class="card p-0">
@@ -122,6 +159,26 @@
         </div>
     </div><!-- col-xl-4 kapanışı -->
 </div><!-- row kapanışı -->
+<div class="row g-3 mt-1">
+    <div class="col-xl-6">
+        <div class="card p-3">
+            <h5 class="mb-3">Eğitim Geçmişi</h5>
+            @if (!Model.UpcomingEducations.Any())
+            {
+                <p class="text-muted mb-0">Henüz eğitim kaydı yok.</p>
+            }
+            else
+            {
+                @foreach (var edu in Model.UpcomingEducations)
+                {
+                    <div class="border-bottom py-2">
+                        <span>@edu.Title</span>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+</div>
 
 <!-- Modal, en dışarıda duruyor -->
 <div class="modal fade" id="messageModal" tabindex="-1">

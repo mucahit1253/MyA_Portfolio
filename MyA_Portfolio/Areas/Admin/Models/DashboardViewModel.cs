@@ -1,4 +1,6 @@
-﻿namespace MyA_Portfolio.Areas.Admin.Models
+﻿using MyA_Portfolio.Entities;
+
+namespace MyA_Portfolio.Areas.Admin.Models
 {
     public class DashboardViewModel
     {
@@ -9,7 +11,9 @@
         public int UnreadMessageCount { get; set; }
         public int CategoryCount { get; set; }
         public int ProjeCount { get; set; }
-
+        public int ActiveProjectCount { get; set; }
+        public int SkillCount { get; set; }
+        public List<Education> UpcomingEducations { get; set; } = new();
         public List<RecentMessageVm> RecentMessages { get; set; } = new();
         public List<CategoryProjectCountVm> ProjectsByCategory { get; set; } = new();
     }

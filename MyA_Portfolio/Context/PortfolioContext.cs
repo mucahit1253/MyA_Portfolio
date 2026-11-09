@@ -19,5 +19,6 @@ namespace MyA_Portfolio.Context
         public DbSet<Project> Projects { get; set; }
         public DbSet<Skill> Skills { get; set; }
         public DbSet<SkillGroup> SkillGroups { get; set; }
+        public DbSet<Setting> Settings { get; set; }
     }
 }

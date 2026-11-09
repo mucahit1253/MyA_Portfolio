@@ -1,0 +1,55 @@
+﻿@model SettingViewModel
+
+@{
+    ViewData["Title"] = "Site Ayarları";
+}
+
+<h2>Site Ayarları</h2>
+
+<form asp-action="Settings" method="post" enctype="multipart/form-data">
+    <input asp-for="SettingId" type="hidden" />
+
+    <div class="mb-3">
+        <label asp-for="SiteTitle" class="form-label">Site Başlığı</label>
+        <input asp-for="SiteTitle" class="form-control" />
+        <span asp-validation-for="SiteTitle" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="MetaDescription" class="form-label">Meta Açıklama (SEO)</label>
+        <textarea asp-for="MetaDescription" class="form-control" rows="3"></textarea>
+        <span asp-validation-for="MetaDescription" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="FooterText" class="form-label">Footer Yazısı</label>
+        <input asp-for="FooterText" class="form-control" />
+        <span asp-validation-for="FooterText" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Logo</label>
+        <input asp-for="LogoFile" class="form-control" accept=".png,.jpg,.jpeg,.svg" />
+        @if (!string.IsNullOrEmpty(Model.LogoUrl))
+        {
+            <div class="mt-2">
+                <img src="@Model.LogoUrl" alt="Logo" style="height:60px;" />
+                <div class="form-text">Mevcut logo — yeni dosya seçmezsen bu korunur.</div>
+            </div>
+        }
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Favicon</label>
+        <input asp-for="FaviconFile" class="form-control" accept=".png,.jpg,.jpeg,.svg" />
+        @if (!string.IsNullOrEmpty(Model.FaviconUrl))
+        {
+            <div class="mt-2">
+                <img src="@Model.FaviconUrl" alt="Favicon" style="height:32px;" />
+                <div class="form-text">Mevcut favicon — yeni dosya seçmezsen bu korunur.</div>
+            </div>
+        }
+    </div>
+
+    <button type="submit" class="btn btn-success">Kaydet</button>
+</form>

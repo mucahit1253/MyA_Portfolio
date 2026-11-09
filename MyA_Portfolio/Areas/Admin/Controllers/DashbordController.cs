@@ -27,6 +27,7 @@ namespace MyA_Portfolio.Areas.Admin.Controllers
                 ProjeCount=_context.Projects.Count(),
                 UnreadMessageCount = _context.Messages.Count(m => !m.IsRead),
                 RecentMessages = _context.Messages
+
               .OrderByDescending(m => m.SendDate)
               .Take(8)
            .Select(m => new RecentMessageVm
@@ -39,6 +40,12 @@ namespace MyA_Portfolio.Areas.Admin.Controllers
                Body=m.MessageDetail
            })
            .ToList(),
+                ActiveProjectCount = _context.Projects.Count(p => p.IsActive),
+                SkillCount = _context.Skills.Count(),
+                UpcomingEducations = _context.Educations
+               .OrderByDescending(e => e.StartDate)
+              .Take(5)
+               .ToList(),
                 ProjectsByCategory = _context.Categories
             .Select(c => new CategoryProjectCountVm
             {

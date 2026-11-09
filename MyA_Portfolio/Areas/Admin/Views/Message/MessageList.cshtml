@@ -2,6 +2,16 @@
 @{
     ViewData["Title"] = "Mesaj Listesi";
 }
+<form method="get" asp-action="MessageList" class="d-flex gap-2 mb-3">
+    <input type="text" name="search" value="@ViewBag.CurrentSearch" class="form-control" placeholder="İsim, konu veya e-posta ara...">
+    <button type="submit" class="btn btn-primary">Ara</button>
+    <a asp-action="MessageList" class="btn btn-secondary">Temizle</a>
+</form>
+
+<div class="mb-3">
+    <a asp-action="MessageList" asp-route-search="@ViewBag.CurrentSearch" asp-route-sortOrder="newest" class="btn btn-sm btn-outline-secondary">En Yeni</a>
+    <a asp-action="MessageList" asp-route-search="@ViewBag.CurrentSearch" asp-route-sortOrder="oldest" class="btn btn-sm btn-outline-secondary">En Eski</a>
+</div>
 <div class="container">
     <br />
     <table class="table table-bordered align-middle">
@@ -34,9 +44,29 @@
                 </td>
                 <td>
                     <a asp-area="Admin" asp-controller="Message" asp-action="DetailMessage" asp-route-id="@msg.MessageId" class="btn btn-sm btn-primary">Mesajı Aç</a>
-                    <a asp-area="Admin" asp-controller="Message" asp-action="DeleteMessage" asp-route-id="@msg.MessageId" class="btn btn-sm btn-danger">Sil</a>
+                    <a asp-route-id="@msg.MessageId" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal-@msg.MessageId">Sil</a>
                 </td>
             </tr>
+            <div class="modal fade" id="deleteModal-@msg.MessageId" tabindex="-1">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Mesaj Sil</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p><strong>@msg.NameSurname</strong> adlı kişiden gelen mesajı silmek istediğinize emin misiniz?</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Vazgeç</button>
+                            <form asp-action="DeleteMessage" method="post">
+                                <input type="hidden" name="id" value="@msg.MessageId" />
+                                <button type="submit" class="btn btn-danger">Evet, Sil</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
         }
     </table>
 </div>
